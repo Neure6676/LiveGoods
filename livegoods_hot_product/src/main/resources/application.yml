@@ -1,0 +1,13 @@
+server:
+  port: 9001
+spring:
+  application:
+    name: livegoods-hot-product
+  profiles:
+    active: mongodb,bannerNginx
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka/
+  instance:
+    prefer-ip-address: true

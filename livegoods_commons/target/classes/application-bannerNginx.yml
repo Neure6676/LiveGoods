@@ -1,0 +1,4 @@
+livegoods:
+  banner:
+    nginx:
+      prefix: http://10.211.55.7:80/

@@ -1,0 +1,79 @@
+# 前端工程启动的时候，是使用npm start
+# 前端工程启动命令start是一个批处理命令，启动了两个服务。 npm run serve 和 mock
+# 1、 Vue的前端应用，占用端口80。
+# 2、 Mock的静态测试服务，占用4006端口。
+server:
+  port: 4006
+spring:
+  application:
+    name: livegoods-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: false
+          lower-case-service-id: true
+      routes:
+        - id: banner
+          uri: lb://livegoods-banner
+          predicates:
+            - Path=/banner
+        - id: hotproduct
+          uri: lb://livegoods-hot-product
+          predicates:
+            - Path=/hotProduct
+            - Query=city  # 请求中，必须包含city请求参数。 参数内容不限。
+        - id: recommendation
+          uri: lb://livegoods-recommendation
+          predicates:
+            - Path=/recommendation
+            - Query=city
+        - id: search
+          uri: lb://livegoods-search
+          predicates:
+            - Path=/search
+            - Query=city
+            - Query=content
+            - Query=page
+        - id: details
+          uri: lb://livegoods-details
+          predicates:
+            - Path=/details
+            - Query=id
+        - id: comment
+          uri: lb://livegoods-comment
+          predicates:
+            - Path=/comment
+            - Query=id
+            - Query=page
+        - id: buytime
+          uri: lb://livegoods-buytime
+          predicates:
+            - Path=/buytime
+            - Query=id
+        - id: sendyzm
+          uri: lb://livegoods-login
+          predicates:
+            - Path=/sendyzm
+            # - Query=phone # 配置后，无法实现路由转发。 此predicate谓词处理器，只检查请求头中的请求参数。
+        - id: login
+          uri: lb://livegoods-login
+          predicates:
+            - Path=/login
+        - id: buyaction
+          uri: lb://livegoods-buyaction
+          predicates:
+            - Path=/buyaction
+        - id: order
+          uri: lb://livegoods-order
+          predicates:
+            - Path=/order
+            - Query=user
+        - id: feelback
+          uri: lb://livegoods-comment
+          predicates:
+            - Path=/feelback
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka/
